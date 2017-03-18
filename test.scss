@@ -1,0 +1,68 @@
+//  @import "common";   引入其他scss文件
+$c:#000;
+$e:nav;   //属性，标签，id，class名  用#{}包起来用
+body{
+  background: #fff;
+  #content{
+    background: $c;
+    #{$e}{
+      background: #000;
+    }
+  }
+}
+//混合宏
+@mixin border($corlor1:#ccc,$courl2:#ddd){     //传值用传值  不传用默认
+  border: 1px solid $corlor1;
+  border-radius: 5px;
+  box-shadow: 1px 5px 3px 5px $courl2;
+}
+.aa{
+  @include border(#000,#fff);
+}
+.ee {
+  @extend .aa;        //继承  可以继承aa的样式以及ee子代继承bb子代的样式
+}
+%ff{                    //占位符   不会生成css  但是可以调用
+  width: 200px;
+  height: 200px;
+}
+.g{
+  @extend %ff;
+}
+@function add($a,$b){
+  @return $a+$b;
+}
+.k{
+  width: add(200, 300px);   //加一个px返回值就有px
+  color:darken(#ddd,10%);  //比ddd深10%的颜色
+}
+@mixin arr($dir,$with,$color){             //封装三角形插件
+  width: 0;
+  height: 0;
+  border-color: $color;
+  border-width: $with;
+  border-style: solid;
+  @if($dir=='top'){
+    border-color: transparent transparent $color transparent;
+  }
+  @if($dir=='bottom'){
+    border-color: $color transparent transparent transparent;
+  }
+  @if($dir=='left'){
+    border-color: transparent $color transparent transparent;
+  }
+  @if($dir=='right'){
+    border-color: transparent transparent transparent $color;
+  }
+  border: solid transparent;
+  border-top: solid ;
+}
+.arrw{
+    @include arr('top',5px,#000);
+}
+@for $i from 1 to 6{    //循环1-5
+
+}
+@for $i from 1 through 6{   //循环1-6
+
+}
